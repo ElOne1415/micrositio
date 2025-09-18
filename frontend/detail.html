@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"> <!-- Permite caracteres especiales -->
+  <title>Detalle del Jugador</title>
+  <link rel="stylesheet" href="styles.css"> <!-- Enlace a estilos globales -->
+</head>
+<body>
+  <!-- Contenedor principal donde se insertará el detalle -->
+  <div class="container" id="detalle"></div>
+
+  <script>
+    // --- Función para obtener el ID de un video de YouTube ---
+    // Soporta formatos: https://youtube.com/watch?v=..., https://youtu.be/... y /embed/
+    function getYouTubeID(url) {
+      if (!url) return null;
+      const m = url.match(/(?:v=|\/embed\/|\.be\/)([A-Za-z0-9_-]{5,})/);
+      return m ? m[1] : null;
+    }
+
+    // --- Función para cargar los datos de un jugador ---
+    async function cargar() {
+      // Lee el parámetro "id" de la URL (ej: detail.html?id=3)
+      let params = new URLSearchParams(window.location.search);
+      let id = params.get("id");
+
+      // Hace petición a la API para obtener datos del jugador específico
+      let res = await fetch(`http://127.0.0.1:8000/jugadores/${id}`);
+      let j = await res.json();
+
+      // Convierte el link de video en formato embed de YouTube
+      const vid = getYouTubeID(j.video);
+      const embedUrl = vid ? `https://www.youtube.com/embed/${vid}` : null;
+
+      // Construye el HTML del detalle dinámicamente
+      document.getElementById("detalle").innerHTML = `
+        <div class="player-detail">
+          <h1>${j.nombre}</h1>
+          <img src="${j.imagen}" alt="${j.nombre}" class="player-img">
+          <h3>${j.equipo} - ${j.posicion} (${j.pais})</h3>
+          <p>${j.descripcion}</p>
+
+          ${embedUrl ? `
+            <div class="video-wrapper">
+              <iframe 
+                src="${embedUrl}"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+              </iframe>
+            </div>
+          ` : `<p>No hay video disponible.</p>` }
+
+          <div class="btn-center">
+            <a href="index.html" class="btn-catalogo">🏠 Volver al Home</a>
+          </div>
+        </div>
+      `;
+    }
+    // Ejecuta la carga automáticamente al abrir la página
+    cargar();
+  </script>
+</body>
+</html>
