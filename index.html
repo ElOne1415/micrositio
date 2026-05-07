@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Parque en Realidad Aumentada</title>
+
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      text-align: center;
+    }
+
+    header {
+      background: #14532d;
+      color: white;
+      padding: 20px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    p {
+      font-size: 16px;
+    }
+
+    model-viewer {
+      width: 100%;
+      height: 520px;
+      background: white;
+    }
+
+    .info {
+      padding: 20px;
+    }
+
+    .nota {
+      background: #dcfce7;
+      border: 1px solid #86efac;
+      padding: 15px;
+      margin: 15px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Parque en Realidad Aumentada</h1>
+    <p>Ejemplo WebAR gratuito usando un modelo 3D</p>
+  </header>
+<model-viewer
+  src="https://modelviewer.dev/shared-assets/models/Astronaut.glb"
+  alt="Modelo 3D de prueba"
+  camera-controls
+  auto-rotate
+  ar
+  ar-modes="webxr scene-viewer quick-look"
+  shadow-intensity="1"
+  exposure="1">
+</model-viewer>
+
+  <div class="info">
+    <h2>¿Cómo funciona?</h2>
+
+    <div class="nota">
+      <p>Desde el celular, abre esta página y toca el botón de realidad aumentada.</p>
+      <p>Luego apunta la cámara hacia una mesa, piso o superficie plana para visualizar el parque.</p>
+    </div>
+  </div>
+
+</body>
+</html>
